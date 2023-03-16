@@ -116,9 +116,9 @@ func main() {
 	for _, v := range f.filterByColor(products, green) {
 		fmt.Printf(" - %s is green\n", v.name)
 	}
-	// ^^^ BEFORE
+	// ↑↑↑ BEFORE
 
-	// vvv AFTER
+	// ↓↓↓ AFTER
 	fmt.Print("Green products (new):\n")
 	greenSpec := ColorSpecification{green}
 	bf := BetterFilter{}

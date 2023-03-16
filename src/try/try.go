@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -25,4 +27,6 @@ func (b b) contain() {
 func main() {
 	instanceB := b{}
 	instanceB.printA()
+	s := filepath.Base(os.Args[0])
+	fmt.Println(s)
 }

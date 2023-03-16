@@ -2,7 +2,7 @@ package main
 
 import (
 	// "Bevis/src/leetcode/Easy/0014_Longest_Common_Prefix/mysolution"
-	"Bevis/src/leetcode/Easy/0014_Longest_Common_Prefix/officaldivideandconquer"
+	officaldivideandconquer "Bevis/src/leetcode/Easy/0014_Longest_Common_Prefix/officalDivideandconquer"
 	"fmt"
 )
 

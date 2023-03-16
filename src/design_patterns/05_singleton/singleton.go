@@ -73,6 +73,7 @@ func readData(path string) (map[string]int, error) {
 
 func GetSingletonDatabase() Database {
 	once.Do(func() {
+		fmt.Println("Do once!!")
 		db := singletonDatabase{}
 		caps, err := readData("./capitals.txt")
 		if err == nil {
@@ -117,6 +118,10 @@ func main() {
 	db := GetSingletonDatabase()
 	pop := db.GetPopulation("Seoul")
 	fmt.Println("Pop of Seoul = ", pop)
+
+	db2 := GetSingletonDatabase()
+	pop2 := db2.GetPopulation("Manila")
+	fmt.Println("Pop of Manila = ", pop2)
 
 	cities := []string{"Seoul", "Mexico City"}
 	// tp:=GetTotalPopulation(cities)

@@ -70,6 +70,12 @@ type MultiFunctionDevice interface {
 	Scanner
 }
 
+type MyScanner struct{}
+
+func (s MyScanner) Scan(d Document) {
+
+}
+
 // interface combintion + decorator
 type MultiFunctionMatchine struct {
 	printer Printer
@@ -85,5 +91,8 @@ func (m MultiFunctionMatchine) Scan(d Document) {
 }
 
 func main() {
-
+	d := Document{}
+	m := MultiFunctionMatchine{printer: MyPrinter{}, scanner: MyScanner{}}
+	m.Print(d)
+	m.Scan(d)
 }

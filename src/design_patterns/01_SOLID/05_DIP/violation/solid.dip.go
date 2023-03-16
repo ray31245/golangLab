@@ -25,24 +25,9 @@ type Info struct {
 	to           *Person
 }
 
-type RelationshipBrowser interface {
-	FindAllChildrenOf(name string) []*Person
-}
-
 // low-level module
 type Relationships struct {
 	relations []Info
-}
-
-func (rs *Relationships) FindAllChildrenOf(name string) []*Person {
-	result := make([]*Person, 0)
-
-	for i, v := range rs.relations {
-		if v.relationship == Parent && v.from.name == name {
-			result = append(result, rs.relations[i].to)
-		}
-	}
-	return result
 }
 
 func (rs *Relationships) AddParentAndChild(parent, child *Person) {
@@ -52,12 +37,16 @@ func (rs *Relationships) AddParentAndChild(parent, child *Person) {
 
 // hight-level module
 type Research struct {
-	browser RelationshipBrowser // low-level
+	// break DIP
+	relations Relationships
 }
 
 func (r *Research) Invertigate() {
-	for _, p := range r.browser.FindAllChildrenOf("John") {
-		fmt.Println("John has a child called", p.name)
+	relations := r.relations.relations
+	for _, rel := range relations {
+		if rel.from.name == "John" && rel.relationship == Parent {
+			fmt.Println("John has a child called", rel.to.name)
+		}
 	}
 }
 
@@ -71,6 +60,6 @@ func main() {
 	relationships.AddParentAndChild(&parent, &child1)
 	relationships.AddParentAndChild(&parent, &child2)
 
-	research := Research{&relationships}
+	research := Research{relationships}
 	research.Invertigate()
 }

@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-var entryCount = 0
-
 type Journal struct {
 	entries []string
 }
@@ -18,13 +16,9 @@ func (j *Journal) String() string {
 	return strings.Join(j.entries, "\n")
 }
 
-func (j *Journal) AddEntry(text string) int {
-	entryCount++
-	entry := fmt.Sprintf("%d: %s",
-		entryCount,
-		text)
+func (j *Journal) AddEntry(text string) {
+	entry := fmt.Sprint(text)
 	j.entries = append(j.entries, entry)
-	return entryCount
 }
 
 func (j *Journal) RemoveEntry(index int) {
@@ -48,9 +42,9 @@ func (j *Journal) LoadFromWeb(url *url.URL) {
 // 不違反單一職責的做法(1)
 var lineSeparator = "\n"
 
-func SaveToFile(j *Journal, filename string) {
+func SaveToFile(s []string, filename string) {
 	_ = ioutil.WriteFile(filename,
-		[]byte(strings.Join(j.entries, lineSeparator)), 0644)
+		[]byte(strings.Join(s, lineSeparator)), 0644)
 }
 
 // 不違反單一職責的做法(2)
@@ -58,9 +52,9 @@ type Persistence struct {
 	lineSeparator string
 }
 
-func (p *Persistence) saveToFile(j *Journal, filename string) {
+func (p *Persistence) saveToFile(s []string, filename string) {
 	_ = ioutil.WriteFile(filename,
-		[]byte(strings.Join(j.entries, p.lineSeparator)), 0644)
+		[]byte(strings.Join(s, p.lineSeparator)), 0644)
 }
 
 func main() {
@@ -68,11 +62,12 @@ func main() {
 	j.AddEntry("I cried today.")
 	j.AddEntry("I ate a bug")
 	fmt.Println(strings.Join(j.entries, "\n"))
+	j.Save("journal.txt")
 
 	// 作法一
-	SaveToFile(&j, "journal.txt")
+	SaveToFile(j.entries, "journal.txt")
 
 	// 作法二
 	p := Persistence{"\n"}
-	p.saveToFile(&j, "journal.txt")
+	p.saveToFile(j.entries, "journal.txt")
 }
