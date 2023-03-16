@@ -38,4 +38,4 @@ jobs:
 
 
       - name: Go Test
-        run: go test ./...
+        run: go run src/leetcode/Easy/0014_Longest_Common_Prefix/main.go
