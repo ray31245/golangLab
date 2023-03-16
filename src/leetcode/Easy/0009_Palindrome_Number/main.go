@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Bevis/src/leetcode/Easy/0009_Palindrome_Number/officalsoulution"
+	"Bevis/src/leetcode/Easy/0009_Palindrome_Number/mysolution"
 	"fmt"
 )
 
@@ -11,6 +11,6 @@ func main() {
 	// fmt.Println("16/10", 16/10)
 	// fmt.Println("17/10", 17/10)
 
-	ans := officalsoulution.IsPalindrome(10)
+	ans := mysolution.IsPalindrome(10)
 	fmt.Println(ans)
 }
